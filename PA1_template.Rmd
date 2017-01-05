@@ -33,7 +33,7 @@ The mean of number of steps taken per day is `r sprintf("%.4f",steps.mean)`
 The median number of steps taken per day is `r steps.median`
 
 ## What is the average daily activity pattern?
-Personal activity levels vary thoughout the day. It will be insightful to look at how activity varies during a day. To do so, we look at the average number of steps taken, averaged across all days. We will also calculate with 5 minute interval contains the maximum number of steps.
+Personal activity levels vary thoughout the day. It will be insightful to look at how activity varies during a day. To do so, we look at the average number of steps taken per interval, averaged across all days. We will also calculate which 5 minute interval contains the maximum number of steps.
 
 ``` {r}
 steps.by.interval <- aggregate(steps~interval, act, mean)
@@ -90,8 +90,12 @@ act.imputed$daytype <- as.factor(ifelse(weekdays(act$date) %in% c("Saturday", "S
 steps.imputed.by.interval <- aggregate(steps ~ interval + daytype, act.imputed, mean)
 
 library(lattice)
-with(steps.imputed.by.interval, xyplot(steps ~ interval | daytype, main="Average Steps per Interval per Day Type", layout=c(1,2), type="l"))
+with(steps.imputed.by.interval, 
+     xyplot(steps ~ interval | daytype,
+            main="Average Steps per Interval per Day Type",
+            layout=c(1,2),
+            type="l"))
 
 ```
 
-Based on the graph, it appears that the activity pattern on weekends is a bit more uniform thoughtout the day than on weekdays.
+Based on the graph, it appears that the activity pattern on weekends is a bit more uniform thoughtout the day than on weekdays. It also looks like the subject slept in a little later on the weekend. I know I do!
